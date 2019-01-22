@@ -1,0 +1,67 @@
+<!--VIEW WORKORDER -> ManagerPage -->
+        <ion-view view-title="View Work Order">
+        <div cg-busy="{promise:myPromise,message:'Loading...',delay:300,minDuration:700,backdrop:true}"></div> 
+            <!-- <ion-nav-buttons   side="left">
+                 <a class="button" ui-sref="emphome"><i class="icon-large ion-chevron-left"></i> Back</a>
+             </ion-nav-buttons>
+                 <ion-nav-buttons   side="right">
+                <div ng-controller="loginCtrl">{{name}}  
+                    <button class="button" ng-click="logout()"><i class="icon ion-log-out" data-pack="default" data-tags="sign out"></i>
+                    </button>
+                </div>
+            </ion-nav-buttons> -->
+        
+        <div class="bar bar-subheader">
+        <div class="button-bar">
+           <a class="button" ng-class="{'button-small buttonScan': isActive('employeeFilter')}" ng-click="setActive('employeeFilter');" ui-sref="managerDashboard.filteringByEmployeeList">Employee</a>
+            <a class="button" ng-class="{'button-small buttonScan': isActive('facilityFilter')}" ng-click="setActive('facilityFilter');getAllFacility();" ui-sref="managerDashboard.filteringByFacility">Facility</a>
+            <a class="button" ng-class="{'button-small buttonScan': isActive('statusFilter')}" ng-click="setActive('statusFilter');getAllWorkStatus();" ui-sref="managerDashboard.filteringByStatus">Status</a>
+          </div>
+    </div>
+ 
+
+         
+            <ion-content class="padding_workorderview"  delegate-handle="mainScroll" class="scrollClass">
+            <!--  <ion-scroll direction="xy" class="scrollClass" delegate-handle="small"> -->
+            <!-- <ion-scroll zooming="true" direction="xy" style="width: 100%; "> -->
+             <ion-refresher pulling-text="Pull to refresh.." on-refresh="doRefreshManagerView()"></ion-refresher>
+             <!-- <input type = "date" class = "form-control"  ng-model="WorkorderDate" ng-show="showDatepicker" ng-change="viewWorkorderFilterByDate()" class="col-sm-12 col-md-12 col-lg-12"/> -->
+             
+
+            
+             <div class="item item-icon-right" ng-repeat="data in viewworkorder">
+                <a class="item item-text-wrap text-center"  ui-sref="managerDashboard.detailedWorkorderView({workorderKey: data.WorkorderKey})">                  
+                  <h2>{{data.WorkorderTypeName}}</h2>
+                  <div ng-show="data.FacilityName">
+                  <p>{{data.FacilityName}} - {{data.ZoneName}} - {{data.FloorName}}</p>
+                  <p>{{data.WorkorderTime}}</p>
+                  <p>Assigned to : {{data.LastName}},{{data.FirstName}} </p>
+                  <p>Priority : {{data.PriorityValue}}</p>
+                  <p>
+                            <ion-label class="label text-brown-{{data.WorkorderStatus === 'Scheduled'}} 
+                                   text-yellow-{{data.WorkorderStatus === 'InProgress'}}
+                                   text-green-{{data.WorkorderStatus === 'Completed'}}
+                                   text-orange-{{data.WorkorderStatus === 'Delayed'}}">
+                                  {{data.WorkorderStatus}}
+                            </ion-label>
+                          </p>
+                 </div>         
+                </a>  <i class="icon ion-chevron-right"></i>     
+              </div>
+
+     
+<div><br><br></div>
+
+<!-- <div class="float-button" ng-click="scrollToTop()">
+<span class="height-fix">
+   <a class="content">
+      <i class="ion-ios-arrow-up"> </i>
+   </a>
+    </span>
+</div> -->
+               <!--  </ion-scroll> -->
+            </ion-content>
+          <ion-floating-button click="scrollToTop()" has-footer="false" button-color="#2AC9AA" icon="ion-ios-arrow-up" iconColor="#fff" class="bottomPadding">
+          </ion-floating-button>
+        </ion-view>
+         

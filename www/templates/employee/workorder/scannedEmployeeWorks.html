@@ -1,0 +1,53 @@
+<!--VIEW WORKORDER -> EmployeePage -->
+        <ion-view view-title="Scan For Work">
+        <div cg-busy="{promise:myPromise,message:'Loading...',delay:300,minDuration:700,backdrop:true}"></div> 
+        <div class="bar bar-subheader">
+        <div class="button-bar">
+         <!--   <a class="button" ng-class="{'button-small buttonScan': isActive('employeeFilter')}" ng-click="setActive('employeeFilter');" ui-sref="employeeDashboard.filteringByEmployeeList">Employee</a> -->
+            <a class="button" ng-class="{'button-small buttonScan': isActive('facilityFilter')}" ng-click="setActive('facilityFilter');getAllFacility();" ui-sref="employeeDashboard.filteringByFacility">Facility</a>
+            <a class="button" ng-class="{'button-small buttonScan': isActive('statusFilter')}" ng-click="setActive('statusFilter');getAllWorkStatus();" ui-sref="employeeDashboard.filteringByStatus">Status</a>
+          </div>
+    </div>
+         
+            <ion-content class="padding_workorderview"  delegate-handle="mainScroll">
+            <!--  <ion-scroll direction="xy" class="scrollClass" delegate-handle="small"> -->
+            <!-- <ion-scroll zooming="true" direction="xy" style="width: 100%; "> -->
+            <!--  <ion-refresher pulling-text="Pull to refresh.." on-refresh="doRefreshBackToScannedRoom()"></ion-refresher> -->
+             <!-- <input type = "date" class = "form-control"  ng-model="WorkorderDate" ng-show="showDatepicker" ng-change="viewWorkorderFilterByDate()" class="col-sm-12 col-md-12 col-lg-12"/> -->
+             <div class="padding_inspection">
+             	<img type="sumbit" on-hold="showBarcodePopup()" style="width: 100px; height: 100px;" class="imageStyleScan"  src="shelfari-scanner-icon.png" on-tap="getEmployeeWorkorderByBarcode()" >
+            </div>
+             <div class="item item-icon-right" ng-repeat="data in viewworkorder">
+                <a class="item item-text-wrap text-center"  ui-sref="employeeDashboard.detailedWorkorderView({workorderKey: data.WorkorderKey})">                  
+                  <h2>{{data.WorkorderTypeName}}</h2>
+                  <div ng-show="data.FacilityName">
+                  <p>{{data.FacilityName}} - {{data.ZoneName}} - {{data.FloorName}}</p>
+                  <p>{{data.WorkorderTime}}</p>
+                  <p>Assigned to : {{data.LastName}},{{data.FirstName}} </p>
+                  <p>
+                            <ion-label class="label text-brown-{{data.WorkorderStatus === 'Scheduled'}} 
+                                   text-yellow-{{data.WorkorderStatus === 'InProgress'}}
+                                   text-green-{{data.WorkorderStatus === 'Completed'}}
+                                   text-orange-{{data.WorkorderStatus === 'Delayed'}}">
+                                  {{data.WorkorderStatus}}
+                            </ion-label>
+                          </p>
+                   </div>       
+                </a>  <i class="icon ion-chevron-right"></i>     
+              </div>
+
+     
+<div><br><br></div>
+<!-- <div class="float-button" ng-click="scrollToTop()">
+<span class="height-fix">
+   <a class="content">
+      <i class="ion-ios-arrow-up"> </i>
+   </a>
+    </span>
+</div> -->
+               <!--  </ion-scroll> -->
+            </ion-content>
+            <ion-floating-button click="scrollToTop()" has-footer="false" button-color="#2AC9AA" icon="ion-ios-arrow-up" iconColor="#fff" class="bottomPadding">
+          </ion-floating-button>
+        </ion-view>
+         
